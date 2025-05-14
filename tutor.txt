@@ -1,0 +1,32 @@
+Untuk mengimplementasikan kode Anda agar dapat menampilkan data produk dari Google Sheets, Anda perlu mengikuti beberapa langkah. Google Sheets dapat digunakan sebagai database sederhana dengan mempublikasikan data Anda dan mengaksesnya melalui API. Berikut adalah langkah-langkah yang perlu Anda lakukan:
+
+Langkah 1: Siapkan Google Sheets
+
+1. Buat Google Sheets:
+  Buat spreadsheet baru di Google Sheets.
+  Buat kolom untuk ID, Nama Produk, Harga, dan Gambar.
+
+2. Isi Data:
+  Masukkan beberapa data produk ke dalam spreadsheet.
+
+3. Publikasikan Spreadsheet:
+  Klik pada File > Publish to the web.
+  Pilih Entire Document dan klik Publish.
+  Salin URL yang diberikan.
+
+4. Dapatkan ID Spreadsheet:
+  Dari URL yang Anda salin, ambil ID spreadsheet. ID biasanya terletak di antara /d/ dan /edit dalam URL.
+
+Langkah 2: Akses Data Menggunakan API Google Sheets
+1. Buat API Key:
+  Kunjungi Google Cloud Console.
+  Buat proyek baru dan aktifkan Google Sheets API.
+  Buat kredensial API Key.
+
+2. Buat URL untuk Mengakses Data:
+  Gunakan format berikut untuk mengakses data:
+    Run
+    Copy code
+      https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values/{range}?key={YOUR_API_KEY}
+
+Gantilah {spreadsheetId} dengan ID spreadsheet Anda dan {range} dengan rentang data (misalnya, Sheet1!A:D untuk kolom A sampai D di Sheet1).
