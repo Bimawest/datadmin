@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Halaman Admin untuk Coffee Shop" />
+    <title>Admin - Coffee Shop</title>
+    <link href="https://cdn.tailwindcss.com" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style(1).css" />
+</head>
+
+<body class="bg-gray-100">
+    <div class="container mx-auto p-4">
+        <h1 class="text-2xl font-bold mb-4">Panel Admin</h1>
+
+        <form id="addProductForm" class="mb-4">
+            <h2 class="text-xl font-semibold">Tambah Produk Baru</h2>
+            <input type="text" id="productName" placeholder="Nama Produk" required class="border p-2 mr-2" />
+            <input type="text" id="productPrice" placeholder="Harga Produk" required class="border p-2 mr-2" />
+            <input type="file" id="productImage" accept="image/*" required class="border p-2 mr-2" />
+            <button type="submit" class="bg-blue-500 text-white p-2">Tambah Produk</button>
+        </form>
+
+        <h2 class="text-xl font-semibold">Produk yang Ada</h2>
+        <section id="productList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+            <!-- Produk akan ditampilkan di sini -->
+        </section>
+    </div>
+
+    <script>
+        const SPREADSHEET_ID = 'YOUR_SPREADSHEET_ID'; // Ganti dengan ID spreadsheet Anda
+        const API_KEY = 'YOUR_API_KEY'; // Ganti dengan API Key Anda
+        const RANGE = 'Sheet1!A:D'; // Ganti dengan rentang yang sesuai
+
+        // Fungsi untuk mengambil data dari Google Sheets
+        async function fetchProducts() {
+            const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${RANGE}?key=${API_KEY}`);
+            const data = await response.json();
+            return data.values.slice(1).map(row => ({
+                name: row[1],
+                price: row[2],
+                image: row[3]
+            }));
+        }
+
+        // Fungsi untuk menampilkan produk
+        async function displayProducts() {
+            const productList = document.getElementById('productList');
+            productList.innerHTML = '';
+
+            const products = await fetchProducts();
+            products.forEach((product,
